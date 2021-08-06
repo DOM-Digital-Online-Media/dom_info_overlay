@@ -1,0 +1,38 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.info_overlay.info_image
+    - field.field.node.info_overlay.info_link
+    - field.field.node.info_overlay.info_subtitle
+    - field.field.node.info_overlay.info_textfield
+    - field.field.node.info_overlay.info_unique_identifier
+    - node.type.info_overlay
+  module:
+    - user
+id: node.info_overlay.teaser
+targetEntityType: node
+bundle: info_overlay
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  title:
+    label: hidden
+    type: string
+    weight: -5
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  info_image: true
+  langcode: true
+  info_link: true
+  info_subtitle: true
+  info_textfield: true
+  info_unique_identifier: true

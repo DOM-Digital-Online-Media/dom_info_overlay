@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @file
+ * Contains dom_info_overlay.module.
+ */
+
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\file\Entity\File;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_dom_static_content_data_alter().
+ */
+function dom_info_overlay_dom_static_content_data_alter(&$data, CacheableMetadata $cache, $language = NULL) {
+  $output = [];
+  $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple();
+
+  /** @var \Drupal\node\Entity\Node $node */
+  foreach ($nodes as $node) {
+    if ($language && $node->hasTranslation($language)) {
+      $node = $node->getTranslation($language);
+    }
+
+    $text = '';
+    if ($textfield = $node->get('info_textfield')->getValue()) {
+      $text = $textfield[0]['value'];
+    }
+
+    $image = '';
+    if ($filefield = $node->get('info_image')->getValue()) {
+      if ($file = File::load($filefield[0]['target_id'])) {
+        $path = $file->getFileUri();
+        $image = Url::fromUri(file_create_url($path))->toString();
+      }
+    }
+
+    $output[$node->get('info_unique_identifier')->getString()] = [
+      'title' => $node->label(),
+      'subtitle' => $node->get('info_subtitle')->getString(),
+      'text' => $text,
+      'image' => $image,
+      'link' => $node->get('info_link')->getString(),
+    ];
+
+    $cache->addCacheTags($node->getCacheTags());
+    $cache->addCacheContexts($node->getCacheContexts());
+  }
+
+  $data['info-overlay'] = $output;
+}

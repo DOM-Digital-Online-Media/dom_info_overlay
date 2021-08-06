@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.info_textfield
+    - node.type.info_overlay
+  module:
+    - text
+id: node.info_overlay.info_textfield
+field_name: info_textfield
+entity_type: node
+bundle: info_overlay
+label: Textfield
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.info_link
+    - node.type.info_overlay
+id: node.info_overlay.info_link
+field_name: info_link
+entity_type: node
+bundle: info_overlay
+label: Link
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

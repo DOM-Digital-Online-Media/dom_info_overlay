@@ -1,0 +1,7 @@
+name: "DOM Info overlay"
+type: module
+description: "Provides Info overlay content type."
+core_version_requirement: ^8 || ^9
+package: "DOM"
+dependencies:
+  - content_translation
