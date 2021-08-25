@@ -14,7 +14,9 @@ use Drupal\site_settings\SiteSettingEntityInterface;
  */
 function dom_info_overlay_dom_static_content_data_alter(&$data, SiteSettingEntityInterface $static_content, array $options) {
   $output = [];
-  $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple();
+  $nodes = \Drupal::entityTypeManager()
+    ->getStorage('node')
+    ->loadByProperties(['type' => 'info_overlay']);
 
   /** @var \Drupal\node\Entity\Node $node */
   foreach ($nodes as $node) {

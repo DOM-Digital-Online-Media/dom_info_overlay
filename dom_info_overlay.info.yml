@@ -5,3 +5,4 @@ core_version_requirement: ^8 || ^9
 package: "DOM"
 dependencies:
   - content_translation
+  - site_settings
