@@ -5,21 +5,21 @@
  * Contains dom_info_overlay.module.
  */
 
-use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\file\Entity\File;
 use Drupal\Core\Url;
+use Drupal\site_settings\SiteSettingEntityInterface;
 
 /**
  * Implements hook_dom_static_content_data_alter().
  */
-function dom_info_overlay_dom_static_content_data_alter(&$data, CacheableMetadata $cache, $language = NULL) {
+function dom_info_overlay_dom_static_content_data_alter(&$data, SiteSettingEntityInterface $static_content, array $options) {
   $output = [];
   $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple();
 
   /** @var \Drupal\node\Entity\Node $node */
   foreach ($nodes as $node) {
-    if ($language && $node->hasTranslation($language)) {
-      $node = $node->getTranslation($language);
+    if ($options['language'] && $node->hasTranslation($options['language'])) {
+      $node = $node->getTranslation($options['language']);
     }
 
     $text = '';
@@ -43,8 +43,8 @@ function dom_info_overlay_dom_static_content_data_alter(&$data, CacheableMetadat
       'link' => $node->get('info_link')->getString(),
     ];
 
-    $cache->addCacheTags($node->getCacheTags());
-    $cache->addCacheContexts($node->getCacheContexts());
+    $options['cache']->addCacheTags($node->getCacheTags());
+    $options['cache']->addCacheContexts($node->getCacheContexts());
   }
 
   $data['info-overlay'] = $output;
